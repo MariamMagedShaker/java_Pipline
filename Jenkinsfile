@@ -19,7 +19,7 @@ pipeline{
         }
         stage("build java app image"){
             steps{
-                sh "docker build -t java:V${BUILD_NUMBER}"
+                sh "docker build -t java:V${BUILD_NUMBER} . "
             }
         }
         // stage("push java app image"){
