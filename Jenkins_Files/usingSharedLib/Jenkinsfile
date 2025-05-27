@@ -23,24 +23,29 @@ pipeline{
                 
             }
         }
-        stage("Test java app"){
+        stage("Build AlL"){
+            parallel{
+                stage("Test java app"){
 
-            steps{
-                sh "mvn test -Dmaven.test.skip=${TEST}"    
-            }
-        }
-     
-        stage("build Docker image"){
-            steps{
-                script{
-                    sayHello "Mero!!!!!!!"
-
-                    def dockerx = new org.ITI.docker()
-                    dockerx.build("mariam191/java_app", "${VERSION}")
+                    steps{
+                        sh "mvn test -Dmaven.test.skip=${TEST}"    
+                    }
                 }
-                
+            
+                stage("build Docker image"){
+                    steps{
+                        script{
+                            sayHello "Mero!!!!!!!"
+
+                            def dockerx = new org.ITI.docker()
+                            dockerx.build("mariam191/java_app", "${VERSION}")
+                        }
+                        
+                    }
+                }
             }
         }
+        
 
         stage("push java app image"){
             steps{
